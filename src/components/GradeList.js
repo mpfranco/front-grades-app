@@ -35,6 +35,7 @@ const GradeList = () => {
   };
 
   const setActiveGrade = (grade, index) => {
+    console.log(grade);
     setCurrentGrade(grade);
     setCurrentIndex(index);
   };
@@ -54,6 +55,7 @@ const GradeList = () => {
     GradeDataService.findByName(searchName)
       .then((response) => {
         setGrade(response.data);
+        setCurrentGrade(response.data);        
         console.log(response.data);
       })
       .catch((e) => {
@@ -135,7 +137,7 @@ const GradeList = () => {
             </div>
 
             <Link
-              to={'/grade/' + currentGrade.id}
+              to={'/grade/' + currentGrade._id}
               className="badge badge-warning"
             >
               Edit

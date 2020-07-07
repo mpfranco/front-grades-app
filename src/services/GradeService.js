@@ -1,7 +1,7 @@
 import http from '../http-common';
 
 const getAll = () => {
-  return http.get('/grade');
+    return http.get('/grade');
 };
 
 const get = (id) => {
@@ -13,6 +13,7 @@ const create = (data) => {
 };
 
 const update = (id, data) => {
+  console.log(id);
   return http.put(`/grade/${id}`, data);
 };
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import GradeDataService from '../services/GradeService';
 
 const Grade = (props) => {
+  console.log(props);
   const initialGradeState = {
     id: null,
     name: '',
@@ -12,11 +13,14 @@ const Grade = (props) => {
   const [currentGrade, setCurrentGrade] = useState(initialGradeState);
   const [message, setMessage] = useState('');
 
-  const getGrade = (id) => {
+  const getGrade = (id) => {    
     GradeDataService.get(id)
       .then((response) => {
         setCurrentGrade(response.data);
         console.log(response.data);
+        // console.log(currentGrade.name);
+        // console.log(currentGrade[0].name);
+        console.log(currentGrade);    
       })
       .catch((e) => {
         console.log(e);
@@ -29,11 +33,11 @@ const Grade = (props) => {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setCurrentGrade({ ...currentGrade, [name]: value });
+    setCurrentGrade({...currentGrade, [name]: value} );
   };
 
-  const updateGrade = () => {
-    GradeDataService.update(currentGrade.id, currentGrade)
+  const updateGrade = () => {        
+    GradeDataService.update(currentGrade[0]._id, currentGrade)
       .then((response) => {
         setMessage('The grade was updated successfully!');
       })
@@ -43,18 +47,19 @@ const Grade = (props) => {
   };
 
   const deleteGrade = () => {
-    GradeDataService.remove(currentGrade.id)
+    GradeDataService.remove(currentGrade[0]._id)
       .then((response) => {
         props.history.push('/grade');
       })
       .catch((e) => {
         console.log(e);
       });
-  };
-
+  };  
   return (
     <div>
-      {currentGrade ? (
+      {      
+      currentGrade ? (
+        
         <div className="edit-form">
           <h4>Grade</h4>
           <form>
